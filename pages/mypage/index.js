@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import Grid from "../../components/grid/";
 
 const MyPage = () => {
-  return (
-    <div>my page here</div>
-  )
-}
+  return <Grid />;
+};
 
-export default MyPage
+export default MyPage;

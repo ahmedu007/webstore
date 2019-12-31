@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import CameraIcon from "@material-ui/icons/PhotoCamera";
@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
+import SpringModal from "../components/modal";
 
 function Copyright() {
   return (
@@ -63,7 +64,7 @@ const cards = [1, 2, 3, 4, 5];
 
 export default function Album() {
   const classes = useStyles();
-
+  const [open, setOpen] = useState(false);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -123,7 +124,7 @@ export default function Album() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => setOpen(true)}>
                       View
                     </Button>
                     <Button size="small" color="primary">
@@ -136,6 +137,9 @@ export default function Album() {
           </Grid>
         </Container>
       </main>
+
+      <SpringModal open={open} setOpen={setOpen} />
+
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
