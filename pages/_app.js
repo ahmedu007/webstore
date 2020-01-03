@@ -1,29 +1,22 @@
 import NextApp from "next/app";
 import React from "react";
 import { ThemeProvider as StyledThemeProvider, createGlobalStyle } from "styled-components";
-import { ThemeProvider as MaterialThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import blueGrey from "@material-ui/core/colors/blueGrey";
-import lightGreen from "@material-ui/core/colors/lightGreen";
+import { ThemeProvider as MaterialThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
-const theme = {
-  ...createMuiTheme({
-    palette: {
-      primary: {
-        light: lightGreen[300],
-        main: lightGreen[500],
-        dark: lightGreen[700],
-      },
-      secondary: {
-        light: blueGrey[300],
-        main: blueGrey[500],
-        dark: blueGrey[700],
-      },
-      type: "dark",
-    },
-  }),
-};
+import { theme } from "../theme";
 
 export default class App extends NextApp {
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return { pageProps };
+  }
+
   componentDidMount() {
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles && jssStyles.parentNode) jssStyles.parentNode.removeChild(jssStyles);
@@ -35,7 +28,9 @@ export default class App extends NextApp {
     return (
       <StyledThemeProvider theme={theme}>
         <MaterialThemeProvider theme={theme}>
+          <CssBaseline />
           <GlobalStyle />
+
           <Component {...pageProps} />
         </MaterialThemeProvider>
       </StyledThemeProvider>
